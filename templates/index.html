@@ -37,7 +37,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <form role="form" method="post" action="register.php">
+                    <form action="/create_user" method="post">
                         <fieldset>
                             <p class="text-uppercase pull-center"> Register Here!</p>
                             <div class="form-group">
@@ -57,7 +57,7 @@
                                     placeholder="Password">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password2" id="password2" class="form-control input-lg"
+                                <input type="password" name="confirm" id="confirm" class="form-control input-lg"
                                     placeholder="Confirm Password">
                             </div>
                             <div class="form-check">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="col-md-5">
-                    <form role="form">
+                    <form action = "/login" method="post">
                         <fieldset>
                             <p class="text-uppercase"> Login Here! </p>
 
