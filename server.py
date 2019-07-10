@@ -23,24 +23,38 @@ def index():
 @app.route("/create_user", methods = ["POST"])
 def create_user():
     session['result'] = []
+
+    if len(request.form['first_name']) < 2:
+        flash("First name must contain at least two letters")  
+
+    if len(request.form['last_name']) < 2:
+        flash("Last name must contain at least two letters")  
+
     if not EMAIL_REGEX.match(request.form['email']):    # test whether a field matches the pattern
         flash("Email is not valid!")
-        return redirect("/")
 
-    mysql = connectToMySQL('site_users')
-    query = "INSERT INTO site_user (first_name, last_name, email, password) VALUES (%(fn)s, %(ln)s, %(mail)s, %(pw)s);"
+    if request.form['password'] != request.form['confirm']:
+        flash("Passwords don't match")
 
-    data = {
-        "fn": request.form['first_name'],
-        "ln": request.form['last_name'],
-        "mail": request.form['email'],
-        "pw": request.form['password']
-    }
 
-    print(data)
+    if not '_flashes' in session.keys():
+        pw_hash1 = bcrypt.generate_password_hash(request.form['password']) 
+        mysql = connectToMySQL('site_users')
+        query = "INSERT INTO site_user (first_name, last_name, email, password) VALUES (%(fn)s, %(ln)s, %(mail)s, %(pw)s);"
 
-    mysql.query_db(query, data)
-    return render_template("/success.html")
+        data = {
+            "fn": request.form['first_name'],
+            "ln": request.form['last_name'],
+            "mail": request.form['email'],
+            "pw": pw_hash1
+        }
+
+        print(data)
+
+        mysql.query_db(query, data)
+        return render_template("/success.html")
+
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)
