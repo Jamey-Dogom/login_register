@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(27, 185, 247);
+}
+
+.container-fluid {
+    padding: 50px;
+    margin-top: 5%;
+}
+
+.container {
+    background-color: white;
+    padding: 50px;
+    margin-top: 2%;
+    border-radius: 5px;
+}
+
+#title {
+    font-family: 'Lobster', cursive;
+}
+
+.log {
+    margin-left: 18.7%;
+}
