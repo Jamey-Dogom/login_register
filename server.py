@@ -15,14 +15,15 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
     
 @app.route("/")
 def index():
-    session = []
+    if not session.get('loggedIn'):
+        session['loggedIn'] = False
+    print(session)
     # mysql = connectToMySQL('site_users')	        # call the function, passing in the name of our db
     # mysql.query_db('SELECT * FROM site_user;')  # call the query_db function, pass in the query as a string
     return render_template("/index.html")
 
 @app.route("/create_user", methods = ["POST"])
 def create_user():
-    session['result'] = []
 
     if len(request.form['first_name']) < 2:
         flash("First name must contain at least two letters")  
@@ -49,12 +50,40 @@ def create_user():
             "pw": pw_hash1
         }
 
-        print(data)
+        for key, values in data.items():
+            session[key] = values
+        
+        session['loggedIn'] = True
+
+        print(session)
 
         mysql.query_db(query, data)
         return render_template("/success.html")
 
     return redirect("/")
+
+@app.route("/login", methods = ["POST"])
+def login():
+    mysql = connectToMySQL('site_users')
+    query = "SELECT * from site_user WHERE email= %(mail)s"
+    data  = {
+        "mail": request.form['username'],
+    }
+    verify = mysql.query_db(query, data)
+    if(verify):
+        if bcrypt.check_password_hash(verify[0]['password'], request.form['password']):
+            session["fn"] = verify[0]['first_name']
+            session['loggedIn'] = True
+            return render_template("/success.html")
+    else:
+        flash("You could not be logged in")
+        print("error")
+    return redirect("/")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)
