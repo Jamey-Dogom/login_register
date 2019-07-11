@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(27, 185, 247);
+    background-color: #2b2e4a;
 }
 
 .container-fluid {
@@ -8,16 +8,48 @@ body {
 }
 
 .container {
-    background-color: white;
+    background-color: #903749;
     padding: 50px;
     margin-top: 2%;
     border-radius: 5px;
 }
 
 #title {
-    font-family: 'Lobster', cursive;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.title {
+    color: white;
+    font-size: 40px;
+}
+
+.wh {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    
 }
 
 .log {
     margin-left: 18.7%;
 }
+
+.register {
+    background-color: #e84545;
+    padding: 50px;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login {
+    background-color: #e84545;
+    padding: 50px;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.cnt {
+    color: white;
+    background-color: #2b2e4a
+}
+
